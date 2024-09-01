@@ -22,6 +22,7 @@
      atom-one-dark-theme
      clang-format
      exec-path-from-shell
+     fountain-mode
      js2-mode
      lsp-ui
      lsp-ivy
@@ -87,6 +88,8 @@
 (require 'tree-sitter-langs)
 (require 'tree-sitter-query)
 
+(require 'fountain-mode)
+
 
 ;; HOOKS
 
@@ -103,10 +106,10 @@
 (add-hook 'go-mode-hook 'lsp-ui-mode)
 (add-hook 'go-mode-hook 'tree-sitter-hl-mode)
 ;; Javascript
-(add-hook 'go-mode-hook 'lsp-mode)
-(add-hook 'go-mode-hook 'lsp-ui-mode)
-(add-hook 'go-mode-hook 'js2-minor-mode)
-(add-hook 'go-mode-hook 'tree-sitter-hl-mode)
+(add-hook 'js-mode-hook 'lsp-mode)
+(add-hook 'js-mode-hook 'lsp-ui-mode)
+(add-hook 'js-mode-hook 'js2-minor-mode)
+(add-hook 'js-mode-hook 'tree-sitter-hl-mode)
 ;; TypeScript
 (add-hook 'ts-mode-hook 'lsp-mode)
 (add-hook 'ts-mode-hook 'lsp-ui-mode)
@@ -119,7 +122,14 @@
 (add-hook 'dart-mode-hook 'lsp-mode)
 (add-hook 'dart-mode-hook 'lsp-ui-mode)
 (add-hook 'dart-mode-hook 'tree-sitter-hl-mode)
-
+;; Fountain
+;;(setq whitespace-space font-lock-comment-face)
+(add-hook 'fountain-mode-hook (lambda ()
+				(setq-local face-remapping-alist '((default (:height 200) default)))
+				(setq-local whitespace-style
+					    '(face tabs tab-mark))
+				(whitespace-mode)
+				))
 
 ;; THEMES
 
