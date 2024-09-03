@@ -4,3 +4,4 @@
 # Except this
 !.gitignore
 !init.el
+!readme.md
