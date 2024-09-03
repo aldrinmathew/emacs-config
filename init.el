@@ -4,7 +4,7 @@
 ;; FONT STYLING
 
 (set-face-attribute 'default nil :font "Iosevka Nerd Font")
-(set-face-attribute 'default nil :height 160)
+(set-face-attribute 'default nil :height 170)
 
 ;; PACKAGES
 
@@ -23,6 +23,7 @@
      clang-format
      exec-path-from-shell
      fountain-mode
+     go-mode
      js2-mode
      lsp-ui
      lsp-ivy
@@ -30,12 +31,14 @@
      lsp-mode
      magit
      projectile
+     shell-pop
      treemacs
      treemacs-magit
      tree-sitter
      tree-sitter-hl
      tree-sitter-langs
      tree-sitter-query
+     wakatime-mode
      which-key
   )
 )
@@ -90,9 +93,27 @@
 
 (require 'fountain-mode)
 
+(require 'shell-pop)
+(custom-set-variables
+ '(shell-pop-term-shell "/bin/bash")
+ '(shell-pop-window-position "bottom")
+ '(shell-pop-universal-key "C-<return>")
+ '(shell-pop-autocd-to-working-dir t)
+ '(shell-pop-restore-window-configuration t)
+ '(shell-pop-cleanup-buffer-at-process-exit t))
+
+(require 'wakatime-mode)
+(global-wakatime-mode)
+
 
 ;; HOOKS
 
+;; Shell mode
+(add-hook 'shell-mode-hook (lambda ()
+			     (local-set-key (kbd "M-l") 'erase-buffer)))
+;; Startup
+(custom-set-variables
+ '(initial-buffer-choice 'recentf-open-files))
 ;; C++
 (add-hook 'c++-mode-hook 'lsp-mode)
 (add-hook 'c++-mode-hook 'lsp-ui-mode)
@@ -102,9 +123,12 @@
 (add-hook 'c-mode-hook 'lsp-ui-mode)
 (add-hook 'c-mode-hook 'tree-sitter-hl-mode)
 ;; Go
-(add-hook 'go-mode-hook 'lsp-mode)
-(add-hook 'go-mode-hook 'lsp-ui-mode)
-(add-hook 'go-mode-hook 'tree-sitter-hl-mode)
+(add-hook 'go-mode-hook #'lsp-deferred)
+(defun lsp-go-install-save-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+;;(add-hook 'go-mode-hook 'tree-sitter-hl-mode)
 ;; Javascript
 (add-hook 'js-mode-hook 'lsp-mode)
 (add-hook 'js-mode-hook 'lsp-ui-mode)
@@ -141,29 +165,3 @@
   ;; (load-theme 'almost-mono-black t)
   ;; (load-theme 'poet-dark-monochrome t)
   ;; (load-theme 'turbonight t)
-
-
-;; FONT LOCK FIXES FOR C++
-
-;; (font-lock-add-keywords 'c++-mode
-;;   `((,(concat
-;;        "\\s *"                              ; Optional white space
-;;        "\\(?:\\.\\|->\\|::\\)"                   ; Member access
-;;        "\\s *"                              ; Optional white space
-;;        "\\<\\([_a-zA-Z][_a-zA-Z0-9]*\\)\\>" ; Member identifier
-;;        "\\s *"                              ; Optional white space
-;;        "(")                                 ; Paren for method invocation
-;;      1 'font-lock-function-name-face t)))
-
-;; (font-lock-add-keywords 'c++-mode
-;;   `((,(concat
-;;        "\\s *"                              ; Optional white space
-;;        "\\(?:\\.\\|->\\)"                   ; Member access
-;;        "\\s *"                              ; Optional white space
-;;        "\\<\\([_a-zA-Z][_a-zA-Z0-9]*\\)\\>" ; Member identifier
-;;        "\\s *")                             ; Optional whitespace
-;;      1 'font-lock-property-use-face t)))
-
-;; (font-lock-add-keywords 'c++-mode
-;;   `((,"\\(?:\\+\\-\\*\\/\\|+=\\|-=\\)"
-;;      1 'font-lock-operator-face t)))
