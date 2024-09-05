@@ -3,7 +3,9 @@
 
 ;; FONT STYLING
 
-(set-face-attribute 'default nil :font "Iosevka Nerd Font")
+(set-face-attribute 'default nil :font (if (eq 'system-type 'windows-nt)
+					   "Iosevka NF"
+					 "Iosevka Nerd Font"))
 (set-face-attribute 'default nil :height 170)
 
 ;; PACKAGES
@@ -54,6 +56,8 @@
 
 
 ;; CONFIGURATIONS
+
+(server-start)
 
 (setq line-number-mode t)
 (setq column-number-mode t)
