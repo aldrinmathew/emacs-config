@@ -8,3 +8,15 @@
 - `neovim` grabbed more of my attention due to its popularity among new-age enthusiasts, but the configuration and customization process turned out to be a mess. Something I believe many people have experienced - you eventually end up with a goliath configuration, half of which you have no understanding of, because you wanted a setup that works. I have also tried NvChad, and I guess it "works", but at some point, you find it tiring to get comfortable with a configuration that you had no say in creating.
 - `helix` is in my opinion, meh. I like that the commands in practice seems to retain their names. Which makes commands obvious in a literate sense. However, Helix turned out to be a typical hyped-up `rust` project - the only interesting part of the project is that it is written in `rust`.
 - `vim` or `vi` for that matter turned out to be boring and unintuitive. I will use it as many do, only when I login to an SSH server and have no other choice. It's useable though and has a unique place.
+
+## Note
+
+Things to do in a new machine
+
+- Setup auto startup for `emacs --daemon`
+
+- Set hotkey for emacs launch to be `emacsclient -c -e '(treemacs)' '(recentf-open-files)'`
+
+- Set the wakatime API key and CLI path using `wakatime-prompt-api-key` & `wakatime-prompt-cli-path`
+
+- Run `nerd-icons-install-fonts`. Required by `doom-modeline`

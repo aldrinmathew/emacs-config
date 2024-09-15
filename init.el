@@ -23,6 +23,9 @@
      ace-window
      atom-one-dark-theme
      clang-format
+     cmake-mode
+     doom-modeline
+     emms
      exec-path-from-shell
      fountain-mode
      go-mode
@@ -32,10 +35,12 @@
      lsp-treemacs
      lsp-mode
      magit
+     nerd-icons
      projectile
      shell-pop
      treemacs
      treemacs-magit
+     treemacs-nerd-icons
      tree-sitter
      tree-sitter-hl
      tree-sitter-langs
@@ -53,18 +58,31 @@
 
 (add-to-list 'load-path "~/.emacs.d/elisp")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(add-to-list 'load-path "~/.emacs.d/emms/lisp")
 
 
 ;; CONFIGURATIONS
 
-(server-start)
+(set-face-attribute 'mode-line-active nil
+		    :background "gray25"
+		    :foreground "light gray"
+		    :box "gray32")
 
 (setq line-number-mode t)
 (setq column-number-mode t)
 (global-display-line-numbers-mode)
 
+(require 'doom-modeline)
+(doom-modeline-mode 1)
+(setq doom-modeline-height 43)
+
+(require 'lsp-mode)
+(global-set-key [f2] 'lsp-rename)
+
 (require 'projectile)
+(projectile-mode)
 (setq projectile-indexing-method 'alien)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
 (require 'clang-format)
 (setq clang-format-style "LLVM")
@@ -77,7 +95,8 @@
 
 (require 'treemacs)
 (setq aw-ignored-buffers (delq 'treemacs-mode aw-ignored-buffers))
-(add-hook 'emacs-startup-hook 'treemacs)
+(treemacs)
+;; (add-hook 'emacs-startup-hook 'treemacs)
 (with-eval-after-load 'treemacs
   (define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action))
 
@@ -96,6 +115,7 @@
 (require 'tree-sitter-query)
 
 (require 'fountain-mode)
+(require 'cmake-mode)
 
 (require 'shell-pop)
 (custom-set-variables
@@ -109,6 +129,25 @@
 (require 'wakatime-mode)
 (global-wakatime-mode)
 
+(require 'flycheck)
+(global-flycheck-mode)
+(global-set-key (kbd "M-p") 'flycheck-previous-error)
+(global-set-key (kbd "M-n") 'flycheck-next-error)
+
+(require 'emms-setup)
+(require 'emms-player-vlc)
+(emms-all)
+(emms-default-players)
+(setq emms-player-vlc-command-name "cvlc")
+(global-set-key [f7] 'emms-start)
+(global-set-key [f5] 'emms-stop)
+(global-set-key [f6] 'emms-previous)
+(global-set-key [f8] 'emms-next)
+(if (file-directory-p "/mnt/main/songs/lofi")
+    (emms-add-directory "/mnt/main/songs/lofi"))
+(emms-mode-line-disable)
+(setq emms-playing-time-display-mode t)
+
 
 ;; HOOKS
 
@@ -116,8 +155,7 @@
 (add-hook 'shell-mode-hook (lambda ()
 			     (local-set-key (kbd "M-l") 'erase-buffer)))
 ;; Startup
-(custom-set-variables
- '(initial-buffer-choice 'recentf-open-files))
+(setq initial-buffer-choice 'recentf-open-files)
 ;; C++
 (add-hook 'c++-mode-hook 'lsp-mode)
 (add-hook 'c++-mode-hook 'lsp-ui-mode)
@@ -129,10 +167,10 @@
 ;; Go
 (add-hook 'go-mode-hook #'lsp-deferred)
 (defun lsp-go-install-save-hooks ()
+  "Lambda to format and organize imports in go files before saving."
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
   (add-hook 'before-save-hook #'lsp-organize-imports t t))
 (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
-;;(add-hook 'go-mode-hook 'tree-sitter-hl-mode)
 ;; Javascript
 (add-hook 'js-mode-hook 'lsp-mode)
 (add-hook 'js-mode-hook 'lsp-ui-mode)
