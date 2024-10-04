@@ -111,7 +111,8 @@
 (treemacs)
 ;; (add-hook 'emacs-startup-hook 'treemacs)
 (with-eval-after-load 'treemacs
-  (define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action))
+  (define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action)
+  (define-key treemacs-mode-map (kbd "C-c C-s") #'treemacs-switch-workspace))
 
 (require 'recentf)
 (recentf-mode 1)
