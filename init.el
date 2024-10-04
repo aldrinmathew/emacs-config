@@ -28,14 +28,17 @@
      go-mode
      ido-completing-read+
      js2-mode
+     kotlin-mode
      lsp-ui
      lsp-ivy
      lsp-treemacs
      lsp-mode
      magit
      nerd-icons
+     php-mode
      projectile
      shell-pop
+     toml-mode
      treemacs
      treemacs-magit
      treemacs-nerd-icons
@@ -45,6 +48,7 @@
      tree-sitter-query
      wakatime-mode
      which-key
+     yaml-mode
   )
 )
 
