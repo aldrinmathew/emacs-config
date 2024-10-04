@@ -24,6 +24,7 @@
      doom-modeline
      emms
      exec-path-from-shell
+     flycheck
      fountain-mode
      go-mode
      ido-completing-read+
