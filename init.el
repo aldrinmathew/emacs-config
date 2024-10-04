@@ -164,6 +164,7 @@
 
 (global-set-key (kbd "C-x t") 'toggle-truncate-lines)
 
+(run-at-time (current-time) 300 'recentf-save-list)
 
 ;; HOOKS
 
