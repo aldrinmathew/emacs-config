@@ -162,6 +162,8 @@
 (emms-mode-line-disable)
 (setq emms-playing-time-display-mode t)
 
+(global-set-key (kbd "C-x t") 'toggle-truncate-lines)
+
 
 ;; HOOKS
 
@@ -210,6 +212,11 @@
 					    '(face tabs tab-mark))
 				(whitespace-mode)
 				))
+(defun my-wrap-lines ()
+  "Disable `truncate-lines' in the current buffer."
+  (setq truncate-lines nil))
+(add-hook 'magit-diff-mode-hook 'my-wrap-lines)
+
 
 ;; THEMES
 
