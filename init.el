@@ -1,7 +1,4 @@
-;; My emacs configuration
-;; Author: Aldrin Mathew
 
-;; FONT STYLING
 
 (set-face-attribute 'default nil :font (if (eq 'system-type 'windows-nt)
 					   "Iosevka NF"
@@ -29,6 +26,7 @@
      exec-path-from-shell
      fountain-mode
      go-mode
+     ido-completing-read+
      js2-mode
      lsp-ui
      lsp-ivy
@@ -63,14 +61,25 @@
 
 ;; CONFIGURATIONS
 
-(set-face-attribute 'mode-line-active nil
-		    :background "gray25"
-		    :foreground "light gray"
-		    :box "gray32")
+;; gray25 & light gray
 
+(set-face-attribute 'mode-line-active nil
+		    :background "slate blue"
+		    :foreground "white"
+		    :box nil)
+
+(setq menu-bar-mode nil)
+(setq tool-bar-mode nil)
 (setq line-number-mode t)
 (setq column-number-mode t)
 (global-display-line-numbers-mode)
+(setq show-paren-mode t)
+(setq scroll-bar-mode nil)
+
+(require 'ido-completing-read+)
+(ido-mode 1)
+(ido-everywhere 1)
+(ido-ubiquitous-mode 1)
 
 (require 'doom-modeline)
 (doom-modeline-mode 1)
