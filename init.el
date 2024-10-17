@@ -102,9 +102,23 @@
 (setq projectile-indexing-method 'alien)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
+(defun cpp-format-function ()
+  "Format cc, cpp, cxx, hpp, c and h files."
+  (message buffer-file-name)
+  (when (buffer-file-name)
+	 (let ((file-ext (file-name-extension buffer-file-name)))
+		(message file-ext)
+		(if (or (string-equal file-ext "cc")
+				  (string-equal file-ext "cpp")
+				  (string-equal file-ext "cxx")
+				  (string-equal file-ext "hpp")
+				  (string-equal file-ext "c")
+				  (string-equal file-ext "h"))
+			 (clang-format-buffer)))))
+
 (require 'clang-format)
 (setq clang-format-style "LLVM")
-(add-hook 'c++-mode-hook (lambda () (add-hook 'before-save-hook 'clang-format-buffer)))
+(add-hook 'c++-mode-hook (add-hook 'before-save-hook 'cpp-format-function))
 
 (exec-path-from-shell-initialize)
 
@@ -114,7 +128,6 @@
 (require 'treemacs)
 (setq aw-ignored-buffers (delq 'treemacs-mode aw-ignored-buffers))
 (treemacs)
-;; (add-hook 'emacs-startup-hook 'treemacs)
 (with-eval-after-load 'treemacs
   (define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action)
   (define-key treemacs-mode-map (kbd "C-c C-s") #'treemacs-switch-workspace))
