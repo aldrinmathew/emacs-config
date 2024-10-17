@@ -73,12 +73,16 @@
 		    :foreground "white"
 		    :box nil)
 
+(setq-default tab-width 3)
 (setq menu-bar-mode nil)
 (setq tool-bar-mode nil)
 (setq line-number-mode t)
 (setq column-number-mode t)
 (global-display-line-numbers-mode)
 (setq show-paren-mode t)
+(setq show-paren-when-point-inside-paren t)
+(setq show-paren-context-when-offscreen t)
+(electric-pair-mode)
 (setq scroll-bar-mode nil)
 
 (require 'ido-completing-read+)
@@ -166,6 +170,9 @@
 (global-set-key (kbd "C-x t") 'toggle-truncate-lines)
 
 (run-at-time (current-time) 300 'recentf-save-list)
+
+(set-terminal-coding-system 'utf-8-unix)
+(setq default-process-coding-system '(utf-8-unix . utf-8-unix))
 
 ;; HOOKS
 
