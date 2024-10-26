@@ -1,9 +1,12 @@
 
-
-(set-face-attribute 'default nil :font (if (eq 'system-type 'windows-nt)
-					   "Iosevka NF"
-					 "Iosevka Nerd Font"))
-(set-face-attribute 'default nil :height 170)
+;;; Code:
+(set-face-attribute 'default nil
+	:font (if (eq 'system-type 'windows-nt)
+							  "Iosevka NF"
+							"Iosevka Nerd Font")
+	:height (if (string-equal (system-name) "AldrinsLaptop")
+								130
+							 170))
 
 ;; PACKAGES
 
