@@ -12,19 +12,21 @@
 
 (require 'package)
 (add-to-list 'package-archives
-	     '("melpa" . "http://melpa.org/packages/"))
+				 '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 
 (unless package-archive-contents
   (package-refresh-contents))
 
+(defvar package-list)
 (setq package-list
   '(
      ace-window
      atom-one-dark-theme
      clang-format
-     cmake-mode
-     doom-modeline
+	  cmake-mode
+	  company
+	  doom-modeline
      emms
      exec-path-from-shell
      flycheck
@@ -52,7 +54,7 @@
      tree-sitter-query
      wakatime-mode
      which-key
-     yaml-mode
+	  yasnippet
   )
 )
 
@@ -197,6 +199,10 @@
 			     (local-set-key (kbd "M-l") 'erase-buffer)))
 ;; Startup
 (setq initial-buffer-choice 'recentf-open-files)
+
+;; Company
+(require 'company)
+(add-hook 'lsp-mode-hook 'company-mode)
 ;; C++
 (add-hook 'c++-mode-hook 'lsp-mode)
 (add-hook 'c++-mode-hook 'lsp-ui-mode)
