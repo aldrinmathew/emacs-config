@@ -158,6 +158,21 @@
 (require 'cmake-mode)
 (require 'shell-pop)
 
+;; Mind Palace
+(defvar mind-palace-dir)
+(setq mind-palace-dir "/mnt/main/docs/AldrinsMindPalace")
+(defun insert-time-comment ()
+  "Insert the current time as a comment to a markdown document."
+  (interactive)
+  (insert (concat "\n[comment]: # " (format-time-string "%Y/%m/%d %H:%M:%S") "\n")))
+(defun mind-palace-fn ()
+  "Function to run if files in the mind palace are being edited."
+   (when (string-equal (file-name-extension buffer-file-name) "md")
+ 	  (when (file-in-directory-p buffer-file-name mind-palace-dir)
+ 		 (buffer-face-set '(:family "Inter" :height 130))
+ 		 (local-set-key (kbd "C-c C-t") 'insert-time-comment))))
+(add-hook 'find-file-hook 'mind-palace-fn)
+
 (require 'wakatime-mode)
 (global-wakatime-mode)
 
