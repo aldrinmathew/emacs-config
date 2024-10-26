@@ -64,6 +64,10 @@
 
 ;; LOADS
 
+(setq custom-file (concat user-emacs-directory "custom.el"))
+(when (file-exists-p custom-file)
+  (load custom-file))
+
 (add-to-list 'load-path "~/.emacs.d/elisp")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (add-to-list 'load-path "~/.emacs.d/emms/lisp")
@@ -150,18 +154,9 @@
 (require 'tree-sitter-hl)
 (require 'tree-sitter-langs)
 (require 'tree-sitter-query)
-
 (require 'fountain-mode)
 (require 'cmake-mode)
-
 (require 'shell-pop)
-(custom-set-variables
- '(shell-pop-term-shell "/bin/bash")
- '(shell-pop-window-position "bottom")
- '(shell-pop-universal-key "C-<return>")
- '(shell-pop-autocd-to-working-dir t)
- '(shell-pop-restore-window-configuration t)
- '(shell-pop-cleanup-buffer-at-process-exit t))
 
 (require 'wakatime-mode)
 (global-wakatime-mode)
