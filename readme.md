@@ -15,7 +15,7 @@ Things to do in a new machine
 
 - Setup auto startup for `emacs --daemon`
 
-- Set hotkey for emacs launch to be `emacsclient -c -e '(treemacs)' '(recentf-open-files)'`
+- Set hotkey for emacs launch to be `emacsclient -c -e '(treemacs)' '(recentf-open-files)' --alternate-editor=`
 
 - Set the wakatime API key and CLI path using `wakatime-prompt-api-key` & `wakatime-prompt-cli-path`
 
