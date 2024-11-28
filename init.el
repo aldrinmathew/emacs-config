@@ -1,7 +1,7 @@
 
 ;;; Code:
 (set-face-attribute 'default nil
-	:font (if (eq 'system-type 'windows-nt)
+	:font (if (string-equal system-type 'windows-nt)
 							  "Iosevka NF"
 							"Iosevka Nerd Font")
 	:height (if (string-equal (system-name) "AldrinsLaptop")
@@ -44,7 +44,7 @@
      php-mode
      projectile
      shell-pop
-     toml-mode
+	  toml-mode
      treemacs
      treemacs-magit
      treemacs-nerd-icons
@@ -74,6 +74,11 @@
 
 
 ;; CONFIGURATIONS
+
+(setq explicit-shell-file-name "/bin/zsh")
+(setq explicit-zsh-args '("--interactive" "--login"))
+(setq shell-pop-term-shell "/bin/zsh")
+(setq comint-process-echoes 0)
 
 ;; gray25 & light gray
 
