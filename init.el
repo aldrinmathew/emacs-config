@@ -4,7 +4,7 @@
 	:font (if (string-equal system-type 'windows-nt)
 							  "Iosevka NF"
 							"Iosevka Nerd Font")
-	:height (if (string-equal (system-name) "AldrinsLaptop")
+	:height (if (string-equal (system-name) "aldrinslaptop")
 								130
 							 170))
 
