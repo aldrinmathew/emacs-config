@@ -5,7 +5,7 @@
 							  "Iosevka NF"
 							"Iosevka Nerd Font")
 	:height (if (string-equal (system-name) "aldrinslaptop")
-								130
+								120
 							 170))
 
 ;; PACKAGES
@@ -161,7 +161,9 @@
 (require 'tree-sitter-query)
 (require 'fountain-mode)
 (require 'cmake-mode)
+
 (require 'shell-pop)
+(global-set-key (kbd "C-<return>") 'shell-pop)
 
 ;; Mind Palace
 (defvar mind-palace-dir)
@@ -242,6 +244,10 @@
 (add-hook 'ts-mode-hook 'lsp-mode)
 (add-hook 'ts-mode-hook 'lsp-ui-mode)
 (add-hook 'ts-mode-hook 'tree-sitter-hl-mode)
+;; TSX
+(add-hook 'tsx-ts-mode-hook 'lsp-mode)
+(add-hook 'tsx-ts-mode-hook 'lsp-ui-mode)
+(add-hook 'tsx-ts-mode-hook 'tree-sitter-hl-mode)
 ;; Rust
 (add-hook 'rust-mode-hook 'lsp-mode)
 (add-hook 'rust-mode-hook 'lsp-ui-mode)
