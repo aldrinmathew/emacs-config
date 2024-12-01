@@ -20,3 +20,5 @@ Things to do in a new machine
 - Set the wakatime API key and CLI path using `wakatime-prompt-api-key` & `wakatime-prompt-cli-path`
 
 - Run `nerd-icons-install-fonts`. Required by `doom-modeline`
+
+- Run `treesit-install-language-grammar` for tsx and use the repository path https://github.com/tree-sitter/tree-sitter-typescript
