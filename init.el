@@ -245,9 +245,10 @@
 (add-hook 'ts-mode-hook 'lsp-ui-mode)
 (add-hook 'ts-mode-hook 'tree-sitter-hl-mode)
 ;; TSX
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.ts\\'" . tsx-ts-mode))
 (add-hook 'tsx-ts-mode-hook 'lsp-mode)
 (add-hook 'tsx-ts-mode-hook 'lsp-ui-mode)
-(add-hook 'tsx-ts-mode-hook 'tree-sitter-hl-mode)
 ;; Rust
 (add-hook 'rust-mode-hook 'lsp-mode)
 (add-hook 'rust-mode-hook 'lsp-ui-mode)
