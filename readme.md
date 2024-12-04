@@ -21,4 +21,6 @@ Things to do in a new machine
 
 - Run `nerd-icons-install-fonts`. Required by `doom-modeline`
 
+- Run `lsp-install-server` for `tailwindcss`, `yamlls`, `rust-analyzer`, `magik`, `ts-ls`, `clangd`, `cmakels`
+
 - Run `treesit-install-language-grammar` for tsx and use the repository path https://github.com/tree-sitter/tree-sitter-typescript

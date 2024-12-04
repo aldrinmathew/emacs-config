@@ -39,6 +39,7 @@
      lsp-ivy
      lsp-treemacs
      lsp-mode
+	  lsp-tailwindcss
      magit
      nerd-icons
      php-mode
