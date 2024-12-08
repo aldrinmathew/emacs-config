@@ -88,7 +88,9 @@
 		    :foreground "white"
 		    :box nil)
 
-(setq-default tab-width 3)
+(setq-default tab-width (if (string-equal (system-name) "aldrinslaptop")
+								4
+							 3))
 (setq menu-bar-mode nil)
 (setq tool-bar-mode nil)
 (setq line-number-mode t)
@@ -261,7 +263,9 @@
 ;; Fountain
 ;;(setq whitespace-space font-lock-comment-face)
 (add-hook 'fountain-mode-hook (lambda ()
-				(setq-local face-remapping-alist '((default (:height 200) default)))
+				(setq-local face-remapping-alist '((default (:height (if (string-equal (system-name) "aldrinslaptop")
+																							170
+																						 200)) default)))
 				(setq-local whitespace-style
 					    '(face tabs tab-mark))
 				(whitespace-mode)
