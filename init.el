@@ -81,12 +81,19 @@
 (setq shell-pop-term-shell "/bin/zsh")
 (setq comint-process-echoes 0)
 
+(require 'whitespace)
+(setq-default whitespace-style '(face tabs tab-mark))
+(setq-default whitespace-display-mappings '((tab-mark 9 [32 8674 9] [92 9])))
+(custom-set-faces '(whitespace-tab ((t (:foreground "dim gray" :weight bold)))))
+(global-whitespace-mode 1)
+
+
 ;; gray25 & light gray
 
 (set-face-attribute 'mode-line-active nil
-		    :background "slate blue"
-		    :foreground "white"
-		    :box nil)
+			:background "slate blue"
+			:foreground "white"
+			:box nil)
 
 (setq-default tab-width (if (string-equal (system-name) "aldrinslaptop")
 								4
