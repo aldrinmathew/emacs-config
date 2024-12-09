@@ -84,7 +84,7 @@
 (require 'whitespace)
 (setq-default whitespace-style '(face tabs tab-mark))
 (setq-default whitespace-display-mappings '((tab-mark 9 [32 8674 9] [92 9])))
-(custom-set-faces '(whitespace-tab ((t (:foreground "dim gray" :weight bold)))))
+(custom-set-faces '(whitespace-tab ((t (:foreground "#181A20" :weight bold)))))
 (global-whitespace-mode 1)
 
 
