@@ -6,7 +6,7 @@
 							"Iosevka Nerd Font")
 	:height (if (string-equal (system-name) "aldrinslaptop")
 								120
-							 170))
+							 160))
 
 ;; PACKAGES
 
@@ -21,41 +21,42 @@
 (defvar package-list)
 (setq package-list
   '(
-     ace-window
-     atom-one-dark-theme
-     clang-format
-	  cmake-mode
-	  company
-	  doom-modeline
-     emms
-     exec-path-from-shell
-     flycheck
-     fountain-mode
-     go-mode
-     ido-completing-read+
-     js2-mode
-     kotlin-mode
-     lsp-ui
-     lsp-ivy
-     lsp-treemacs
-     lsp-mode
-	  lsp-tailwindcss
-     magit
-     nerd-icons
-     php-mode
-     projectile
-     shell-pop
-	  toml-mode
-     treemacs
-     treemacs-magit
-     treemacs-nerd-icons
-     tree-sitter
-     tree-sitter-hl
-     tree-sitter-langs
-     tree-sitter-query
-     wakatime-mode
-     which-key
-	  yasnippet
+	ace-window
+	atom-one-dark-theme
+	clang-format
+	cmake-mode
+	company
+	doom-modeline
+	emms
+	exec-path-from-shell
+	flycheck
+	fountain-mode
+	go-mode
+	ido-completing-read+
+	js2-mode
+	kotlin-mode
+	lsp-ui
+	lsp-ivy
+	lsp-treemacs
+	lsp-mode
+	lsp-tailwindcss
+	magit
+	nerd-icons
+	php-mode
+	prettier
+	projectile
+	shell-pop
+	toml-mode
+	treemacs
+	treemacs-magit
+	treemacs-nerd-icons
+	tree-sitter
+	tree-sitter-hl
+	tree-sitter-langs
+	tree-sitter-query
+	wakatime-mode
+	which-key
+	yasnippet
   )
 )
 
@@ -84,7 +85,7 @@
 (require 'whitespace)
 (setq-default whitespace-style '(face tabs tab-mark))
 (setq-default whitespace-display-mappings '((tab-mark 9 [32 8674 9] [92 9])))
-(custom-set-faces '(whitespace-tab ((t (:foreground "#181A20" :weight bold)))))
+(custom-set-faces '(whitespace-tab ((t (:foreground "#504D5A" :weight bold)))))
 (global-whitespace-mode 1)
 
 
@@ -128,10 +129,8 @@
 
 (defun cpp-format-function ()
   "Format cc, cpp, cxx, hpp, c and h files."
-  (message buffer-file-name)
   (when (buffer-file-name)
 	 (let ((file-ext (file-name-extension buffer-file-name)))
-		(message file-ext)
 		(if (or (string-equal file-ext "cc")
 				  (string-equal file-ext "cpp")
 				  (string-equal file-ext "cxx")
@@ -219,6 +218,86 @@
 (set-terminal-coding-system 'utf-8-unix)
 (setq default-process-coding-system '(utf-8-unix . utf-8-unix))
 
+;; Treesitter Modes
+
+(use-package treesit
+  :mode (("\\.tsx\\'" . tsx-ts-mode)
+         ("\\.py\\'" . python-ts-mode)
+         ("\\.cmake\\'" . cmake-ts-mode)
+         ("\\.go\\'" . go-ts-mode)
+         ("\\.js\\'" . typescript-ts-mode)
+         ("\\.mjs\\'" . typescript-ts-mode)
+         ("\\.mts\\'" . typescript-ts-mode)
+         ("\\.cjs\\'" . typescript-ts-mode)
+         ("\\.ts\\'" . typescript-ts-mode)
+         ("\\.jsx\\'" . tsx-ts-mode)
+         ("\\.json\\'" . json-ts-mode)
+         ("\\.yaml\\'" . yaml-ts-mode)
+         ("\\.css\\'" . css-ts-mode)
+         ("\\.yml\\'" . yaml-ts-mode)
+         ("\\.php\\'" . php-ts-mode)
+         ("\\.prisma\\'" . prisma-ts-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.mm\\'" . objc-mode)
+         ("\\.mdx\\'" . markdown-mode))
+  :preface
+  (defun os/setup-install-grammars ()
+    "Install Tree-sitter grammars if they are absent."
+    (interactive)
+    (dolist (grammar
+             '((css . ("https://github.com/tree-sitter/tree-sitter-css" "v0.20.0"))
+               (bash "https://github.com/tree-sitter/tree-sitter-bash")
+               (html . ("https://github.com/tree-sitter/tree-sitter-html" "v0.20.1"))
+               (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript" "v0.21.2" "src"))
+               (kotlin "https://github.com/fwcd/tree-sitter-kotlin")
+               (json . ("https://github.com/tree-sitter/tree-sitter-json" "v0.20.2"))
+               (python . ("https://github.com/tree-sitter/tree-sitter-python" "v0.20.4"))
+               (go "https://github.com/tree-sitter/tree-sitter-go" "v0.20.0")
+               (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+               (make "https://github.com/alemuller/tree-sitter-make")
+               (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+               (cmake "https://github.com/uyha/tree-sitter-cmake")
+               (c "https://github.com/tree-sitter/tree-sitter-c")
+               (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
+               (objc "https://github.com/tree-sitter-grammars/tree-sitter-objc")
+               (toml "https://github.com/tree-sitter/tree-sitter-toml")
+               (php "https://github.com/tree-sitter/tree-sitter-php" "v0.22.8" "php/src" )
+               (tsx . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "tsx/src"))
+               (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" "v0.20.3" "typescript/src"))
+               (yaml . ("https://github.com/ikatyang/tree-sitter-yaml" "v0.5.0"))
+               (prisma "https://github.com/victorhqc/tree-sitter-prisma")))
+      (add-to-list 'treesit-language-source-alist grammar)
+      ;; Only install `grammar' if we don't already have it
+      ;; installed. However, if you want to *update* a grammar then
+      ;; this obviously prevents that from happening.
+      (unless (treesit-language-available-p (car grammar))
+        (treesit-install-language-grammar (car grammar)))))
+
+  ;; Optional, but recommended. Tree-sitter enabled major modes are
+  ;; distinct from their ordinary counterparts.
+  ;;
+  ;; You can remap major modes with `major-mode-remap-alist'. Note
+  ;; that this does *not* extend to hooks! Make sure you migrate them
+  ;; also
+  (dolist (mapping
+           '((python-mode . python-ts-mode)
+             (css-mode . css-ts-mode)
+             (typescript-mode . typescript-ts-mode)
+             (js-mode . typescript-ts-mode)
+             (js2-mode . typescript-ts-mode)
+             ; (c-mode . c-ts-mode)
+             ; (c++-mode . c++-ts-mode)
+             ; (c-or-c++-mode . c-or-c++-ts-mode)
+             (bash-mode . bash-ts-mode)
+             (css-mode . css-ts-mode)
+             (json-mode . json-ts-mode)
+             (js-json-mode . json-ts-mode)
+             (sh-mode . bash-ts-mode)
+             (sh-base-mode . bash-ts-mode)))
+    (add-to-list 'major-mode-remap-alist mapping))
+  :config
+  (os/setup-install-grammars))
+
 ;; HOOKS
 
 ;; Shell mode
@@ -227,9 +306,24 @@
 ;; Startup
 (setq initial-buffer-choice 'recentf-open-files)
 
+;; TypeScript & Javascript
+(require 'prettier)
+(defun ts-format-function()
+  "Format js, ts, tsx and jsx files."
+  (when (buffer-file-name)
+	 (let ((file-ext (file-name-extension buffer-file-name)))
+		(if (or (string-equal file-ext "ts")
+				  (string-equal file-ext "tsx")
+				  (string-equal file-ext "js")
+				  (string-equal file-ext "jsx")
+				  (string-equal file-ext "json"))
+			 (prettier-prettify)))))
+(global-prettier-mode)
+
 ;; Company
 (require 'company)
 (add-hook 'lsp-mode-hook 'company-mode)
+(add-hook 'lsp-mode-hook 'lsp-diagnostics-mode)
 ;; C++
 (add-hook 'c++-mode-hook 'lsp-mode)
 (add-hook 'c++-mode-hook 'lsp-ui-mode)
@@ -245,20 +339,58 @@
   (add-hook 'before-save-hook #'lsp-format-buffer t t)
   (add-hook 'before-save-hook #'lsp-organize-imports t t))
 (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
+(define-derived-mode complete-tsx-mode jtsx-tsx-mode "Complete TSX mode"
+  "Major mode for editing TSX files with LSP support."
+  (lsp))
+
+(define-derived-mode complete-typescript-mode jtsx-typescript-mode "Complete Typescript Mode"
+  "Major mode for editing Typescript files with LSP support."
+  (lsp))
+
+(define-derived-mode complete-jsx-mode jtsx-jsx-mode "Complete JS mode"
+  "Major mode for editing JS files with LSP support."
+  (lsp))
+
+;(use-package jtsx
+;  :ensure t
+;  :mode (("\\.jsx?\\'" . jtsx-jsx-mode)
+;			("\\.tsx\\'"  . jtsx-tsx-mode)
+;			("\\.ts\\'"   . jtsx-typescript-mode)))
+
 ;; Javascript
-(add-hook 'js-mode-hook 'lsp-mode)
-(add-hook 'js-mode-hook 'lsp-ui-mode)
-(add-hook 'js-mode-hook 'js2-minor-mode)
-(add-hook 'js-mode-hook 'tree-sitter-hl-mode)
+;(add-hook 'js-mode-hook 'lsp-mode)
+;(add-hook 'js-mode-hook 'lsp-ui-mode)
+;(add-hook 'js-mode-hook 'jtsx-jsx-mode)
 ;; TypeScript
-(add-hook 'ts-mode-hook 'lsp-mode)
-(add-hook 'ts-mode-hook 'lsp-ui-mode)
-(add-hook 'ts-mode-hook 'tree-sitter-hl-mode)
+;(add-hook 'ts-mode-hook 'lsp-mode)
+;(add-hook 'ts-mode-hook 'lsp-ui-mode)
+;(add-hook 'ts-mode-hook 'jtsx-typescript-mode)
+; (add-hook 'ts-mode-hook 'typescript-ts-mode)
 ;; TSX
-(add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
-(add-to-list 'auto-mode-alist '("\\.ts\\'" . tsx-ts-mode))
-(add-hook 'tsx-ts-mode-hook 'lsp-mode)
-(add-hook 'tsx-ts-mode-hook 'lsp-ui-mode)
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . complete-tsx-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . complete-jsx-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'"  . complete-jsx-mode))
+(add-to-list 'auto-mode-alist '("\\.ts\\'"  . complete-typescript-mode))
+
+(use-package lsp-tailwindcss
+  ;:straight '(lsp-tailwindcss :type git :host github :repo "merrickluo/lsp-tailwindcss")
+  :init (setq lsp-tailwindcss-add-on-mode t)
+  :config
+  (setq lsp-tailwindcss-major-modes '(jtsx-tsx-mode css-ts-mode)
+        lsp-tailwindcss-experimental-class-regex
+        [":class\\s+\"([^\"]*)\""
+         ":[\\w-.#>]+\\.([\\w-]*)"
+         "tw|yourModule\\(([^)]*)\\)"
+         "[\"'`]([^\"'`]*).*?[\"'`]"
+         ]
+        lsp-tailwindcss-class-attributes ["class" "className" "ngClass" ":class"]))
+
+;; JS, TS, TSX, JSX
+(add-hook 'jtsx-jsx-mode-hook (add-hook 'before-save-hook 'ts-format-function))
+(add-hook 'jtsx-typescript-mode-hook (add-hook 'before-save-hook 'ts-format-function))
+(add-hook 'jtsx-tsx-mode-hook (add-hook 'before-save-hook 'ts-format-function))
+
 ;; Rust
 (add-hook 'rust-mode-hook 'lsp-mode)
 (add-hook 'rust-mode-hook 'lsp-ui-mode)
