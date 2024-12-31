@@ -97,8 +97,8 @@
 			:box nil)
 
 (setq-default tab-width (if (string-equal (system-name) "aldrinslaptop")
-								4
-							 3))
+								3
+							 2))
 (setq menu-bar-mode nil)
 (setq tool-bar-mode nil)
 (setq line-number-mode t)
