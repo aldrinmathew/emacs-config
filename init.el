@@ -26,6 +26,7 @@
 	clang-format
 	cmake-mode
 	company
+	dart-mode
 	doom-modeline
 	emms
 	exec-path-from-shell
@@ -35,6 +36,7 @@
 	ido-completing-read+
 	js2-mode
 	kotlin-mode
+	lsp-dart
 	lsp-ui
 	lsp-ivy
 	lsp-treemacs
@@ -46,6 +48,7 @@
 	prettier
 	projectile
 	shell-pop
+	sudo-edit
 	toml-mode
 	treemacs
 	treemacs-magit
