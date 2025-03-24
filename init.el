@@ -161,6 +161,8 @@
 (setq git-commit-cd-to-toplevel t)
 (global-set-key (kbd "C-x C-r") 'recentf-open-files)
 
+(global-set-key (kbd "C-h C-r") 'split-window-right)
+
 (require 'magit)
 (global-set-key (kbd "M-g") 'magit)
 
@@ -391,10 +393,6 @@
 (add-hook 'jtsx-typescript-mode-hook (add-hook 'before-save-hook 'ts-format-function))
 (add-hook 'jtsx-tsx-mode-hook (add-hook 'before-save-hook 'ts-format-function))
 
-;; Rust
-(add-hook 'rust-mode-hook 'lsp-mode)
-(add-hook 'rust-mode-hook 'lsp-ui-mode)
-(add-hook 'rust-mode-hook 'tree-sitter-hl-mode)
 ;; Dart
 (add-hook 'dart-mode-hook 'lsp-mode)
 (add-hook 'dart-mode-hook 'lsp-ui-mode)
