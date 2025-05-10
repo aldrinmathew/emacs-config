@@ -5,7 +5,7 @@
 							  "Iosevka NF"
 							"Iosevka Nerd Font")
 	:height (if (string-equal (system-name) "aldrinslaptop")
-								120
+								110
 							 160))
 
 ;; PACKAGES
@@ -80,10 +80,10 @@
 
 ;; CONFIGURATIONS
 
-(setq explicit-shell-file-name "/bin/zsh")
-(setq explicit-zsh-args '("--interactive" "--login"))
-(setq shell-pop-term-shell "/bin/zsh")
-(setq comint-process-echoes 0)
+(setq-default explicit-shell-file-name "/bin/zsh")
+(setq-default explicit-zsh-args '("--interactive" "--login"))
+(setq-default shell-pop-term-shell "/bin/zsh")
+(setq-default comint-process-echoes 0)
 
 (require 'whitespace)
 (setq-default whitespace-style '(face tabs tab-mark))
@@ -181,17 +181,17 @@
 
 ;; Mind Palace
 (defvar mind-palace-dir)
-(setq mind-palace-dir "/mnt/main/docs/AldrinsMindPalace")
+(setq mind-palace-dir "/mnt/main/AldrinsMindPalace")
 (defun insert-time-comment ()
   "Insert the current time as a comment to a markdown document."
   (interactive)
   (insert (concat "\n[comment]: # " (format-time-string "%Y/%m/%d %H:%M:%S") "\n")))
+(global-set-key (kbd "C-c C-t") 'insert-time-comment)
 (defun mind-palace-fn ()
   "Function to run if files in the mind palace are being edited."
    (when (string-equal (file-name-extension buffer-file-name) "md")
  	  (when (file-in-directory-p buffer-file-name mind-palace-dir)
- 		 (buffer-face-set '(:family "Inter" :height 130))
- 		 (local-set-key (kbd "C-c C-t") 'insert-time-comment))))
+ 		 (buffer-face-set '(:family "Inter" :height 110)))))
 (add-hook 'find-file-hook 'mind-palace-fn)
 
 (require 'wakatime-mode)
@@ -403,13 +403,10 @@
 ;; Fountain
 ;;(setq whitespace-space font-lock-comment-face)
 (add-hook 'fountain-mode-hook (lambda ()
-				(setq-local face-remapping-alist '((default (:height (if (string-equal (system-name) "aldrinslaptop")
-																							170
-																						 200)) default)))
-				(setq-local whitespace-style
-					    '(face tabs tab-mark))
-				(whitespace-mode)
-				))
+						;;(buffer-face-set '(:height (if (string-equal (system-name) "aldrinslaptop") 170 200)))
+						(setq-local whitespace-style '(face tabs tab-mark))
+						(whitespace-mode)
+					))
 (defun my-wrap-lines ()
   "Disable `truncate-lines' in the current buffer."
   (setq truncate-lines nil))
@@ -426,3 +423,4 @@
   ;; (load-theme 'almost-mono-black t)
   ;; (load-theme 'poet-dark-monochrome t)
   ;; (load-theme 'turbonight t)
+(put 'erase-buffer 'disabled nil)
