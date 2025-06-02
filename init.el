@@ -21,6 +21,7 @@
 (defvar package-list)
 (setq package-list
   '(
+	ace-jump-mode
 	ace-window
 	atom-one-dark-theme
 	clang-format
@@ -109,7 +110,8 @@
 (custom-set-faces '(whitespace-tab ((t (:foreground "#504D5A" :weight bold)))))
 (custom-set-faces '(whitespace-space ((t (:foreground "#403D4A" :weight normal)))))
 (global-whitespace-mode 1)
-
+(add-hook 'magit-section-mode-hook
+	(lambda () (setq-local whitespace-style nil)))
 
 ;; gray25 & light gray
 
@@ -146,6 +148,7 @@
 (projectile-mode)
 (setq projectile-indexing-method 'alien)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+(global-set-key (kbd "M-c") 'projectile-compile-project)
 
 (defun cpp-format-function ()
   "Format cc, cpp, cxx, hpp, c and h files."
@@ -164,6 +167,9 @@
 (add-hook 'c++-mode-hook (add-hook 'before-save-hook 'cpp-format-function))
 
 (exec-path-from-shell-initialize)
+
+(require 'ace-jump-mode)
+(global-set-key (kbd "C-j") 'ace-jump-mode)
 
 (require 'ace-window)
 (global-set-key (kbd "M-o") 'ace-window)
