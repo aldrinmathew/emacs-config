@@ -96,10 +96,18 @@
 (setq-default shell-pop-term-shell "/bin/zsh")
 (setq-default comint-process-echoes 0)
 
+;; Tabs & Spaces
+
+(setq-default backward-delete-char-untabify-method 'hungry)
+(global-set-key (kbd "TAB") 'self-insert-command)
 (require 'whitespace)
-(setq-default whitespace-style '(face tabs tab-mark))
-(setq-default whitespace-display-mappings '((tab-mark 9 [32 8674 9] [92 9])))
+(setq-default whitespace-style '(face tabs tab-mark spaces space-mark))
+(setq-default whitespace-display-mappings
+				'((face)
+						(tab-mark 9 [8674 32 32] [92 9])
+						(space-mark 32 [183])))
 (custom-set-faces '(whitespace-tab ((t (:foreground "#504D5A" :weight bold)))))
+(custom-set-faces '(whitespace-space ((t (:foreground "#403D4A" :weight normal)))))
 (global-whitespace-mode 1)
 
 
@@ -110,9 +118,7 @@
 			:foreground "white"
 			:box nil)
 
-(setq-default tab-width (if (string-equal (system-name) "aldrinslaptop")
-								3
-							 2))
+(setq-default tab-width 4)
 (setq menu-bar-mode nil)
 (setq tool-bar-mode nil)
 (setq line-number-mode t)
